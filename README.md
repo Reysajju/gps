@@ -26,14 +26,14 @@ A complete book publishing service with beautiful UI, multiple email templates, 
 
 ### 2. Configure Environment Variables
 
-In your Netlify site settings, go to **Site settings** → **Build & deploy** → **Environment variables** and add:
+In your Netlify site settings, go to **Site settings** → **Build & deploy** → **Environment variables** and add these **REQUIRED** variables:
 
 | Variable | Description | Where to Find |
 |----------|-------------|---------------|
+| `CONVERTKIT_API_KEY` | Your ConvertKit API Key | Already configured: `kit_751307ce63b967f60e900a5a04e4d292` |
 | `CONVERTKIT_API_SECRET` | Your ConvertKit API Secret | ConvertKit Account → Account Info → API |
 | `UNSUBSCRIBE_SECRET` | Secret key for unsubscribe tokens | Generate a random string |
 
-**Note**: The ConvertKit API Key is already configured in the code: `kit_751307ce63b967f60e900a5a04e4d292`
 ### 3. Platform Components
 
 #### Publishing Inquiry UI

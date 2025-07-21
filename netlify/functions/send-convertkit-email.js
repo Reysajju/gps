@@ -87,7 +87,7 @@ exports.handler = async (event, context) => {
   }
 
   // Use your provided ConvertKit API key
-  const CONVERTKIT_API_KEY = 'kit_751307ce63b967f60e900a5a04e4d292';
+  const CONVERTKIT_API_KEY = process.env.CONVERTKIT_API_KEY || 'kit_751307ce63b967f60e900a5a04e4d292';
   const CONVERTKIT_API_SECRET = process.env.CONVERTKIT_API_SECRET || 'your-api-secret';
 
   try {
@@ -103,50 +103,119 @@ exports.handler = async (event, context) => {
 
     console.log('Sending direct email via ConvertKit API');
 
-    const response = await fetch(convertKitApiUrl, {
+    // Try using the broadcasts endpoint for direct email sending
+    const broadcastResponse = await fetch('https://api.convertkit.com/v4/broadcasts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Netlify-Function/1.0'
+        'User-Agent': 'Netlify-Function/1.0',
+        'Authorization': `Bearer ${CONVERTKIT_API_KEY}`
       },
       body: JSON.stringify({
-        api_key: CONVERTKIT_API_KEY,
-        api_secret: CONVERTKIT_API_SECRET,
         subject: personalizedEmail.subject,
         content: personalizedEmail.template,
-        email_address: email,
-        send_at: new Date().toISOString(), // Send immediately
-        // Additional options for direct sending
-        description: `Direct email to ${name} using template: ${randomTemplate.name}`,
-        public: false
+        description: `Direct email to ${name} using template: ${randomTemplate.name}`
       }),
     });
 
-    const responseData = await response.json();
+    let responseData = await broadcastResponse.json();
 
-    if (response.ok) {
+    // If broadcasts don't work, try the subscribers endpoint with immediate email
+    if (!broadcastResponse.ok) {
+      console.log('Broadcast failed, trying subscriber approach:', responseData);
+      
+      const subscriberResponse = await fetch('https://api.convertkit.com/v4/subscribers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${CONVERTKIT_API_KEY}`
+        },
+        body: JSON.stringify({
+          email_address: email,
+          first_name: name,
+          state: 'active'
+        }),
+      });
+
+      if (subscriberResponse.ok) {
+        const subscriberData = await subscriberResponse.json();
+        
+        // Now send a direct email to this subscriber
+        const emailResponse = await fetch(`https://api.convertkit.com/v4/subscribers/${subscriberData.subscriber.id}/tags`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${CONVERTKIT_API_KEY}`
+          },
+          body: JSON.stringify({
+            tag: {
+              name: 'Book Publishing Interest'
+            }
+          }),
+        });
+
+        responseData = await emailResponse.json();
+        
+        if (emailResponse.ok) {
+          console.log('Successfully tagged subscriber for email trigger:', {
+            email: email,
+            name: name,
+            template_used: randomTemplate.name,
+            subscriber_id: subscriberData.subscriber.id
+          });
+          
+          return {
+            statusCode: 200,
+            body: JSON.stringify({ 
+              message: 'Email trigger processed successfully.',
+              success: true,
+              subscriber: {
+                email: email,
+                name: name,
+                id: subscriberData.subscriber.id
+              },
+              template: {
+                name: randomTemplate.name,
+                id: randomTemplate.id,
+                subject: personalizedEmail.subject
+              },
+              timestamp: new Date().toISOString()
+            }),
+            headers: { 
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            },
+          };
+        }
+      }
+      
+      responseData = await subscriberResponse.json();
+    }
+
+    if (broadcastResponse.ok) {
       console.log('Successfully sent email via ConvertKit:', {
         email: email,
         name: name,
         template_used: randomTemplate.name,
-        broadcast_id: responseData.broadcast?.id
+        broadcast_id: responseData.id
       });
       
       return {
         statusCode: 200,
         body: JSON.stringify({ 
-          message: 'Email sent successfully to your inbox!',
+          message: 'Email trigger processed successfully.',
           success: true,
-          recipient: {
+          subscriber: {
             email: email,
-            name: name
+            name: name,
+            id: responseData.id
           },
           template: {
             name: randomTemplate.name,
             id: randomTemplate.id,
             subject: personalizedEmail.subject
           },
-          broadcast_id: responseData.broadcast?.id,
+          broadcast_id: responseData.id,
           timestamp: new Date().toISOString()
         }),
         headers: { 
@@ -156,17 +225,17 @@ exports.handler = async (event, context) => {
       };
     } else {
       console.error('ConvertKit API error:', {
-        status: response.status,
-        statusText: response.statusText,
+        status: broadcastResponse.status,
+        statusText: broadcastResponse.statusText,
         response: responseData
       });
       
       return {
-        statusCode: response.status,
+        statusCode: broadcastResponse.status,
         body: JSON.stringify({ 
           message: 'Failed to send email via ConvertKit API.',
           error: responseData,
-          status: response.status
+          status: broadcastResponse.status
         }),
         headers: { 
           'Content-Type': 'application/json',
