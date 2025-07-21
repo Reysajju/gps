@@ -1,0 +1,12 @@
+{
+  "name": "convertkit-email-functions",
+  "version": "1.0.0",
+  "description": "Netlify functions for ConvertKit email integration",
+  "main": "send-convertkit-email.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["netlify", "convertkit", "email", "serverless"],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,18 @@
+# netlify.toml
+[build]
+  functions = "netlify/functions" # This tells Netlify where to find your serverless functions
+  publish = "dist" # Vite build output directory
+
+# Enable CORS for serverless function APIs
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type"
+    Access-Control-Allow-Methods = "POST, GET, OPTIONS"
+
+# Redirect all routes to index.html for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
