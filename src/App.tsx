@@ -40,7 +40,7 @@ function App() {
     setResponse(null);
 
     try {
-      const functionUrl = `${window.location.origin}/.netlify/functions/send-convertkit-email`;
+      const functionUrl = `/.netlify/functions/send-convertkit-email`;
       
       const res = await fetch(functionUrl, {
         method: 'POST',
@@ -59,6 +59,7 @@ function App() {
         setTimeout(() => setShowSuccess(false), 5000);
       }
     } catch (error) {
+      console.error('Network error:', error);
       setResponse({
         message: 'Network error. Please try again.',
         error: 'network'
