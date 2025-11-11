@@ -108,8 +108,7 @@ function App() {
               </span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Get your book published on 50+ platforms worldwide. We handle the complex submission 
-              process while you focus on writing. Professional formatting, global distribution, and more.
+              Get into waiting list of Book Club by Sajjad Rasool for all, previous and upcoming, books.
             </p>
           </div>
 
@@ -118,7 +117,7 @@ function App() {
             <div className="mb-8 animate-bounce">
               <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-6 py-3 rounded-full">
                 <CheckCircle className="w-5 h-5" />
-                <span className="font-medium">Publishing info sent! Check your email 📧</span>
+                <span className="font-medium">Thanks for Joining, You'll be Notified</span>
               </div>
             </div>
           )}
@@ -171,7 +170,7 @@ function App() {
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
-                    <span>Get Publishing Info</span>
+                    <span>Get into List</span>
                   </>
                 )}
               </button>
@@ -205,7 +204,7 @@ function App() {
             </form>
 
             <p className="text-xs text-gray-500 mt-4 text-center">
-              By submitting, you agree to receive publishing information. 
+              By submitting, you agree to receive Book Club, Promotional and marketing emails from Sajjad Rasool. 
               <br />
               You can unsubscribe at any time.
             </p>
@@ -218,11 +217,10 @@ function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Our Publishing Services
+              What We'll offer
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We provide comprehensive publishing services to get your book distributed 
-              globally across major platforms and niche markets.
+              We'll have a Book Club to get your reader journy to skies.
             </p>
           </div>
 
@@ -231,9 +229,9 @@ function App() {
               <div className="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Globe className="w-6 h-6 text-white" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Global Distribution</h4>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Global Experience</h4>
               <p className="text-gray-600">
-                Get your book published on 50+ major platforms including Amazon, Apple Books, and more.
+                People around globe will join the community.
               </p>
             </div>
 
@@ -241,9 +239,9 @@ function App() {
               <div className="bg-indigo-600 w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Professional Formatting</h4>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Occational Books Giveaways</h4>
               <p className="text-gray-600">
-                Expert formatting and proofreading to ensure your book meets all platform requirements.
+                Expect more than often giveaways of author's books.
               </p>
             </div>
 
@@ -253,7 +251,7 @@ function App() {
               </div>
               <h4 className="text-xl font-semibold text-gray-900 mb-2">Complete Support</h4>
               <p className="text-gray-600">
-                ISBN assistance, cover design support, and ongoing help throughout the publishing process.
+                Onboarding, query and question about books, and ongoing help throughout the journey.
               </p>
             </div>
           </div>
@@ -268,11 +266,10 @@ function App() {
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg">
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-2xl font-bold">Global Book Publishing</h3>
+              <h3 className="text-2xl font-bold">Don't Just Read</h3>
             </div>
             <p className="text-gray-400 mb-6 max-w-md mx-auto">
-              Helping authors reach global audiences through professional publishing 
-              services and worldwide distribution.
+              Don't read books lonely, share experience with world.
             </p>
             <div className="flex items-center justify-center space-x-6 text-sm text-gray-400">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
