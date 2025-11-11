@@ -80,17 +80,17 @@ function App() {
                 <BookOpen className="w-6 h-6 text-white" />
               </div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Global Book Publishing
+                Join Waiting List
               </h1>
             </div>
             <div className="hidden md:flex items-center space-x-6 text-sm text-gray-600">
               <span className="flex items-center space-x-1">
                 <Globe className="w-4 h-4 text-blue-500" />
-                <span>50+ Platforms</span>
+                <span>Book Club</span>
               </span>
               <span className="flex items-center space-x-1">
                 <Star className="w-4 h-4 text-yellow-500" />
-                <span>Professional Service</span>
+                <span>Giveaways</span>
               </span>
             </div>
           </div>
